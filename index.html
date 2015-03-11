@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <!-- Le meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Push the button</title>
+    <meta name="description" content="">
+    <meta name="robots" content="nofollow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <!-- Le styles -->
+    <link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body>
+    <div id="display" class="display"></div>
+    <h2 id="promptr" class="promptr"></h2>
+
+    <!-- Le script -->
+    <script charset="utf-8" src="//liwe.io/api/liwe.js"></script>
+    <script charset="utf-8">
+
+      var promptrTO,
+        display = document.getElementById('display'),
+        promptr = document.getElementById('promptr'),
+        classes = ['sunrise', 'rainbow', 'skyline', 'stress'],
+        currentClassIndex = 0,
+
+        myLiwe = new Liwe({
+          key: 'k3Y4l1W3g1ThU85aMp1E4pP5',
+          maxRemoteConn: 1
+        });
+        // NOTE: this key only works on liwe.github.io
+
+      /**
+       * Callback for success connection between your Liwe instance
+       * and the distant server.
+       * The object given as parameter contain all the informations
+       * about the connection (url, domain allowed.. ). Please read
+       * the documentation, this object might evolve.
+       */
+      myLiwe.on('connect', function (info) {
+        promtpr('Grab your smartphone and go on ' + info.url);
+      });
+
+      /**
+       * Callback for error from your Liwe instance
+       * Reasons might be various. From connection problem or error on remote.
+       * The parameter is a simple string: the error label
+       */
+      myLiwe.on('error', function (error) {
+        console.log('%cLiwe [error]', 'background:red; color:white; font-weight:bold;', error);
+        promptr('Ouch, something bad happen, sorry.');
+      });
+
+      /**
+       * Callback for new remote
+       */
+      myLiwe.on('new_remote', function (remote) {
+        
+        // Inform the user he is connected
+        promtpr('Connected!', 3000);
+
+        // Set up the button UI
+        remote.setUI('button', 'Press the button to change the animation');
+
+        // Listen the 'press_button' event to update the
+        // animation
+        remote.on('button', function (e) {
+          if (e.type !== 'press') {
+            return;
+          }
+          currentClassIndex = (currentClassIndex + 1) % classes.length;
+          display.className = 'display ' + classes[currentClassIndex];
+          promtpr(classes[currentClassIndex], 3000);
+        });
+
+        // Listen the remote disconnection event to show
+        // back connection url
+        remote.on('disconnect', function (remote) {
+          promtpr('The remote has been disconnected. Reconnect on ' + myLiwe.info.url);
+        });
+      });
+
+      // Let's start the magic
+      myLiwe.connect();
+
+
+      /**
+       * promptr
+       * wrapper to display information to the user
+       *
+       * @param {string}  message  Message to display
+       * @param {integer} duration Duration of the message
+       */
+      function promtpr (message, duration) {
+        promptr.style.display = 'block';
+        promptr.textContent = message;
+        if (promptrTO) {
+          clearTimeout(promptrTO);
+        }
+        if (duration) {
+          promptrTO = setTimeout(function () {
+            promptr.style.display = 'none';
+          }, duration);
+        }
+      }
+    </script>
+  </body>
+</html>
