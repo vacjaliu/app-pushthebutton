@@ -10,7 +10,7 @@ Try it on http://liwe.github.io/app-pushthebutton
 Before all, you have to inject the API script.
 
 ```html
-<script charset="utf-8" src="//liwe.io/api/liwe.js"></script>
+<script charset="utf-8" src="//liwe.co/api/liwe.js"></script>
 ```
 
 ### Liwe object
@@ -18,7 +18,7 @@ Before all, you have to inject the API script.
 Everything start with the constructor
 
 ```javascript
-myLiwe = new Liwe({
+var myLiwe = new Liwe({
   key: 'k3Y4l1W3g1ThU85aMp1E4pP5',
   maxRemoteConn: 1
 });
