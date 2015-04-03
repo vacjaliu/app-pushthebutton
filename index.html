@@ -21,10 +21,10 @@
     <script charset="utf-8" src="//liwe.co/api/liwe.js"></script>
     <script charset="utf-8">
 
-      var promptrTO,
-        display = document.getElementById('display'),
-        promptr = document.getElementById('promptr'),
-        classes = ['sunrise', 'rainbow', 'skyline', 'stress'],
+      var promptrTimeout,
+        promptrDom = document.getElementById('promptr'),
+        display    = document.getElementById('display'),
+        classes    = ['sunrise', 'rainbow', 'skyline', 'stress'],
         currentClassIndex = 0,
 
         myLiwe = new Liwe({
@@ -41,7 +41,7 @@
        * the documentation, this object might evolve.
        */
       myLiwe.on('connect', function (info) {
-        promtpr('Grab your smartphone and go on ' + info.url);
+        promptr('Grab your smartphone and go on ' + info.url);
       });
 
       /**
@@ -60,7 +60,7 @@
       myLiwe.on('new_remote', function (remote) {
         
         // Inform the user he is connected
-        promtpr('Connected!', 3000);
+        promptr('Connected!', 3000);
 
         // Set up the button UI
         remote.setUI('button', 'Press the button to change the animation');
@@ -73,13 +73,13 @@
           }
           currentClassIndex = (currentClassIndex + 1) % classes.length;
           display.className = 'display ' + classes[currentClassIndex];
-          promtpr(classes[currentClassIndex], 3000);
+          promptr(classes[currentClassIndex], 3000);
         });
 
         // Listen the remote disconnection event to show
         // back connection url
         remote.on('disconnect', function (remote) {
-          promtpr('The remote has been disconnected. Reconnect on ' + myLiwe.info.url);
+          promptr('The remote has been disconnected. Reconnect on ' + myLiwe.info.url);
         });
       });
 
@@ -94,15 +94,15 @@
        * @param {string}  message  Message to display
        * @param {integer} duration Duration of the message
        */
-      function promtpr (message, duration) {
-        promptr.style.display = 'block';
-        promptr.textContent = message;
-        if (promptrTO) {
-          clearTimeout(promptrTO);
+      function promptr (message, duration) {
+        promptrDom.style.display = 'block';
+        promptrDom.textContent = message;
+        if (promptrTimeout) {
+          clearTimeout(promptrTimeout);
         }
         if (duration) {
-          promptrTO = setTimeout(function () {
-            promptr.style.display = 'none';
+          promptrTimeout = setTimeout(function () {
+            promptrDom.style.display = 'none';
           }, duration);
         }
       }
