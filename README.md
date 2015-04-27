@@ -1,16 +1,15 @@
 # Push the button
-## Liwe demo app
 
-This is a exemple of the most basic app with Liwe.
-The entire script is in the `index.html` file.
 Try it on http://liwe.github.io/app-pushthebutton
+
+This is a exemple of the most basic app with Liwe. The entire script is in the `index.html` file.
 
 ## Liwe, the basics
 
 Before all, you have to inject the API script.
 
 ```html
-<script charset="utf-8" src="//liwe.co/api/liwe.js"></script>
+<script charset="utf-8" src="http://liwe.co/api/liwe.js"></script>
 ```
 
 ### Liwe object
@@ -67,7 +66,7 @@ At the moment, the API is compatible with only 3 UIs:
 - `gyro`: get the accelerometer/gyroscope information from the device
 - `touch`: transform the remote a touchepad screen
 
-Each UI got different kind of event types. Check the documentation to know more about it.
+Each UI got different kind of event types. Check the [documentation](https://github.com/liwe/liwe/wiki) to know more about it.
 
 Then you have to listen the event you want. In the current exemple, the event listened is `touch`.
 
@@ -81,7 +80,7 @@ The event object received by the listener contain different information:
 
 - `type`: type of event. In out case `press` or `release`
 - `ui`: UI name where the event come from
-- `data`: extra information about the event. This is optionnal, depending on the event. Check the documentation for further information.
+- `data`: extra information about the event. This is optionnal, depending on the event. Check the [documentation](https://github.com/liwe/liwe/wiki) for further information.
 
 Then listen in case of disconnection
 
@@ -94,3 +93,9 @@ remote.on('disconnect', function (remote) {
 In out case, once the current remote is disconnected, a message is displayed on the promptr to explain how to reconnect.
 
 But if you want, you can force a remote to disconnect via the `disconnect` method. There's no usecase here, but if you want to implement a timeout, this might help.
+
+## Troubleshoot
+
+Check the [documentation](https://github.com/liwe/liwe/wiki) for further information.
+
+Have any questions? Any ideas? Feedback? Join the conversation at [![Gitter](https://badges.gitter.im/liwe/liwe.png)](https://gitter.im/liwe/liwe)
