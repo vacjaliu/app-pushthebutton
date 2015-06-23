@@ -29,7 +29,7 @@ In this object, you have to mention your `key` to use the service (you can reque
 
 ```javascript
 myLiwe.on('connect', function (info) {
-  promtpr('Grab your smartphone and go on ' + info.url);
+  promptr('Grab your smartphone and go on ' + info.url);
 });
 ```
 
@@ -86,7 +86,7 @@ Then listen in case of disconnection
 
 ```javascript
 remote.on('disconnect', function (remote) {
-  promtpr('The remote has been disconnected. Reconnect on ' + myLiwe.info.url);
+  promptr('The remote has been disconnected. Reconnect on ' + myLiwe.info.url);
 });
 ```
 
